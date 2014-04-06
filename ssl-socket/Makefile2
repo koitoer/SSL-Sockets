@@ -1,0 +1,21 @@
+CC = gcc
+
+Aplicacion: serverthread cliente
+
+serverthread: serverthread.o
+	$(CC) -o serverthread serverthread.o -L/usr/local/ssl/include/ -L/usr/local/ssl/lib -lssl -lcrypto -lnsl -ldl -lpthread
+
+serverthread.o: serverthread.c 
+	$(CC) -c serverthread.o serverthread.c
+
+cliente: cliente.o
+	$(CC) -o cliente cliente.o -L/usr/local/ssl/include/ -L/usr/local/ssl/lib -lssl -lcrypto -lnsl -ldl -lpthread
+
+cliente.o: cliente.c
+	$(CC) -c cliente.o cliente.c
+
+cipher:
+	/usr/local/ssl/bin/openssl ciphers -v 'ALL:!ADH:@STRENGTH'
+
+clean:
+	rm *.o
